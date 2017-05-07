@@ -67,7 +67,7 @@ app.set('views', path.join(__dirname, 'dist'))
 app.engine('.html', require('ejs').__express)
 app.set('view engine', 'ejs')
 
-app.use(favicon('./favicon.ico'))
+app.use(favicon('./favicon.png'))
 app.use(compression({threshold: 0}))
 // 日志
 app.use(logger('":method :url" :status :res[content-length] ":referrer" ":user-agent"'))
@@ -87,44 +87,53 @@ app.use('/service-worker.js', serve('./dist/service-worker.js'))
 app.use('/api', routes)
 
 // 前台路由, ssr 渲染
-app.get(['/', '/category/:id', '/search/:qs', '/article/:id', '/about', '/trending/:by', '/user/account', '/user/password'], (req, res) => {
-    if ((req.originalUrl === '/user/account' || req.originalUrl === '/user/password') && !req.cookies.user) {
-        return res.redirect('/')
-    }
-    if (!renderer) {
-        return res.end('waiting for compilation... refresh in a moment.')
-    }
-    const s = Date.now()
-
-    res.setHeader("Content-Type", "text/html")
-    res.setHeader("Server", serverInfo)
-
-    const errorHandler = err => {
-        if (err && err.code === 404) {
-            res.status(404).end('404 | Page Not Found')
-        } else {
-            // Render Error Page or Redirect
-            res.status(500).end('Internal Error 500')
-            console.error(`error during render : ${req.url}`)
-            console.error(err)
+app.get([
+        '/',
+        '/category/:id',
+        '/search/:qs',
+        '/article/:id',
+        '/about',
+        '/trending/:by',
+        '/user/account',
+        '/user/password'
+    ], 
+    (req, res) => {
+        if ((req.originalUrl === '/user/account' || req.originalUrl === '/user/password') && !req.cookies.user) {
+            return res.redirect('/')
         }
-    }
+        if (!renderer) {
+            return res.end('waiting for compilation... refresh in a moment.')
+        }
+        const s = Date.now()
 
-    const context = {
-        url: req.url,
-        cookies: req.cookies
-    }
+        res.setHeader("Content-Type", "text/html")
+        res.setHeader("Server", serverInfo)
 
-    const htmlStream = new HTMLStream({ template: frontend, context })
-    htmlStream.on('beforeStart', () => {
-        const meta = context.meta.inject()
-        context.head = (context.head || '') + meta.title.text()
-    })
-    renderer.renderToStream(context)
-        .on('error', errorHandler)
-        .pipe(htmlStream)
-        .on('end', () => console.log(`whole request: ${Date.now() - s}ms`))
-        .pipe(res)
+        const errorHandler = err => {
+            if (err && err.code === 404) {
+                res.status(404).end('404 | Page Not Found')
+            } else {
+                // Render Error Page or Redirect
+                res.status(500).end('Internal Error 500')
+                console.error(`error during render : ${req.url}`)
+                console.error(err)
+            }
+        }
+
+        const context = {
+            url: req.url,
+            cookies: req.cookies
+        }
+        const htmlStream = new HTMLStream({ template: frontend, context })
+        htmlStream.on('beforeStart', () => {
+            const meta = context.meta.inject()
+            context.head = (context.head || '') + meta.title.text()
+        })
+        renderer.renderToStream(context)
+            .on('error', errorHandler)
+            .pipe(htmlStream)
+            .on('end', () => console.log(`whole request: ${Date.now() - s}ms`))
+            .pipe(res)
 })
 
 // 后台渲染

@@ -79,8 +79,8 @@ export default {
     },
     metaInfo () {
         return {
-            title: '关于 - M.M.F 小屋',
-            meta: [{ vmid: 'description', name: 'description', content: 'M.M.F 小屋' }]
+            title: '关于 - Tomorrow Finance',
+            meta: [{ vmid: 'description', name: 'description', content: 'Tomorrow Finance' }]
         }
     }
 }
