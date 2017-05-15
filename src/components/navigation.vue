@@ -4,8 +4,8 @@
             <div class="left-part"><a href="/" exact class="logo-link"><i class="icon"></i><span class="hidden">T-Finance</span></a>
                 <div class="main-nav">
                     <a href="/" class="nav-link"><i class="icon icon-nav-home"></i><span class="text">首页</span></a>
-                    <a href="/trending/visit" class="nav-link"><i class="icon icon-nav-explore"></i><span class="text">热门</span></a>
-                    <a href="/about" class="nav-link"><i class="icon icon-nav-features"></i><span class="text">关于</span></a>
+                    <a href="/trending/visit" class="nav-link"><i class="icon icon-nav-explore"></i><span class="text">行情</span></a>
+                    <a href="/about" class="nav-link"><i class="icon icon-nav-features"></i><span class="text">问答</span></a>
                 </div>
             </div>
         </div>
@@ -14,8 +14,8 @@
                 <router-link to="/" active-class="current" exact class="logo-link"><i class="icon nav-icon-logo">T-Finance</i><span class="hidden">T-Finance</span></router-link>
                 <div class="main-nav">
                     <router-link to="/" active-class="current" exact class="nav-link"><i class="icon icon-nav-home"></i><span class="text">首页</span></router-link>
-                    <router-link to="/trending/visit" active-class="current" class="nav-link"><i class="icon icon-nav-explore"></i><span class="text">热门</span></router-link>
-                    <router-link to="/about" active-class="current" class="nav-link"><i class="icon icon-nav-features"></i><span class="text">关于</span></router-link>
+                    <router-link to="/trending/visit" active-class="current" class="nav-link"><i class="icon icon-nav-explore"></i><span class="text">行情</span></router-link>
+                    <router-link to="/about" active-class="current" class="nav-link"><i class="icon icon-nav-features"></i><span class="text">问答</span></router-link>
                 </div>
             </div>
             <div class="right-part">
@@ -50,5 +50,3 @@ export default {
     }
 }
 </script>
-
-   

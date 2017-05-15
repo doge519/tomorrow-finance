@@ -15,14 +15,21 @@ const state = {
     trending: []
 }
 
+const ACTION_TYPE = {
+    GET_ARTICLE_LIST: 'getArticleList'
+}
+
 const actions = {
-    async ['getArticleList']({commit, state, rootState: {global, route: { fullPath }}}, config) {
+    async [ACTION_TYPE.GET_ARTICLE_LIST]({commit, state, rootState: {global, route: { fullPath }}}, config) {
         const path = fullPath
+        
         if (state.lists.data.length > 0 && path === state.lists.path && config.page === 1) {
             global.progress = 100
             return
         }
+
         const { data: { data, code} } = await api.get('frontend/article/list', {...config, cache: true})
+  
         if (data && code === 200) {
             commit('receiveArticleList', {
                 ...config,
@@ -88,7 +95,7 @@ const mutations = {
 }
 
 const getters = {
-    ['getArticleList'](state) {
+    [ACTION_TYPE.GET_ARTICLE_LIST](state) {
         return state.lists
     },
     ['getArticleItem'](state) {

@@ -14,7 +14,7 @@ var config = merge(baseConfig, {
         'jquery': 'jQuery'
     },
     module: {
-        rules: [{
+        rules: [/*{
             test: /\.vue$/,
             loader: 'eslint-loader',
             enforce: "pre",
@@ -26,7 +26,7 @@ var config = merge(baseConfig, {
             enforce: "pre",
             include: projectRoot,
             exclude: /node_modules/
-        }, {
+        }, */{
             test: /\.vue$/,
             loader: 'vue-loader',
             options: vueConfig

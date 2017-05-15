@@ -3,6 +3,9 @@ import ls from 'store2'
 
 export const inBrowser = typeof window !== 'undefined'
 
+/**
+ * 获取浏览器suerAgent
+ */
 export const ua = () => {
     const userAgentInfo = inBrowser ? navigator.userAgent : ''
     const Agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPod']
@@ -16,6 +19,10 @@ export const ua = () => {
     return flag
 }
 
+/**
+ * 设置屏幕滚动条高度
+ * @param  {string} path 页面路由
+ */
 export const ssp = path => {
     if (!inBrowser) return
     const clientHeight = document.documentElement.clientHeight,

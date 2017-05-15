@@ -3,15 +3,17 @@ var router = express.Router()
 var multipart = require('connect-multiparty')
 var multipartMiddleware = multipart()
 
-var backendArticle = require('../api/backend-article'),
-    backendCategory = require('../api/backend-category'),
-    backendUser = require('../api/backend-user'),
-    frontendArticle = require('../api/frontend-article'),
-    frontendComment = require('../api/frontend-comment'),
-    frontendLike = require('../api/frontend-like'),
-    frontendUser = require('../api/frontend-user'),
-    isAdmin = require('./is-admin'),
-    isUser = require('./is-user')
+var backendArticle = require('../api/backend-article');
+var backendCategory = require('../api/backend-category');
+var backendUser = require('../api/backend-user');
+var frontendArticle = require('../api/frontend-article');
+var frontendComment = require('../api/frontend-comment');
+var frontendLike = require('../api/frontend-like');
+var frontendUser = require('../api/frontend-user');
+var isAdmin = require('./is-admin');
+var isUser = require('./is-user');
+
+var frontendNews = require('../api/frontend-news.js')
 
 // 添加管理员
 router.get('/backend', (req, res) => {
@@ -109,6 +111,8 @@ router.post('/frontend/user/password', isUser, multipartMiddleware, frontendUser
 router.get('/frontend/like', isUser, frontendLike.like)
 // 取消喜欢
 router.get('/frontend/unlike', isUser, frontendLike.unlike)
+
+router.get('/frontend/news', frontendNews.getNews)
 
 router.get('*', (req, res) => {
     res.json({
